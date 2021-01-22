@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jmeter-maven-plugin-example</artifactId>
+    <groupId>com.lazerycode.jmeter</groupId>
+    <version>DEV-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <description>
+        Executes a JMeter test.
+
+        Invoke with "mvn verify -Pperformance"
+    </description>
+
+    <properties>
+        <webapp.protocol>http</webapp.protocol>
+        <webapp.host>www.mozilla.com</webapp.host>
+        <webapp.port>88</webapp.port>
+        <webapp.uris>${project.basedir}/src/test/uris/uris.txt</webapp.uris>
+        <jmeter.analysis.maven.plugin.version>1.0.6</jmeter.analysis.maven.plugin.version>
+        <jmeter-maven-plugin.version>2.0.3</jmeter-maven-plugin.version>
+        <test.duration>30</test.duration>
+        <test.threads>10</test.threads>
+    </properties>
+
+    <profiles>
+
+        <profile>
+            <id>performance</id>
+            <build>
+               <plugins>
+                    <plugin>
+                        <groupId>com.lazerycode.jmeter</groupId>
+                        <artifactId>jmeter-maven-plugin</artifactId>
+                        <version>2.7.0</version>
+                        <executions>
+                            <execution>
+                                <id>jmeter-tests</id>
+                                <goals>
+                                    <goal>jmeter</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                        <configuration>            
+                            <generateReports>true</generateReports>
+                            <resultsFileFormat>xml</resultsFileFormat>
+                            <testResultsTimestamp>true</testResultsTimestamp>                    
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
